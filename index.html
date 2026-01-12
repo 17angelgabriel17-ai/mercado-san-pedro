@@ -61,13 +61,15 @@ fetch(sheetURL)
         const div = document.createElement("div");
         div.className = "card";
 
-        div.innerHTML = `
-          <img src="${p['Imagen'] || ''}" alt="${p.Nombre}">
-          <h3>${p.Nombre}</h3>
-          <strong>${p.Local}</strong>
-          <p>${p.Descripción}</p>
-          ${p.WhatsApp ? `<a class="wa" href="https://wa.me/52${p.WhatsApp}" target="_blank">Escribir por WhatsApp</a>` : ""}
-        `;
+        const imagen = p.Imagen || p.imagen || p['Imagen '] || p['imagen '] || '';
+
+div.innerHTML = `
+  ${imagen ? `<img src="${imagen}" alt="${p.Nombre}">` : ''}
+  <h3>${p.Nombre}</h3>
+  <strong>${p.Local}</strong>
+  <p>${p.Descripción}</p>
+  ${p.WhatsApp ? `<a class="wa" href="https://wa.me/52${p.WhatsApp}" target="_blank">Escribir por WhatsApp</a>` : ""}
+`;
         app.appendChild(div);
       });
     }

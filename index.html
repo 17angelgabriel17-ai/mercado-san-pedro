@@ -7,23 +7,71 @@
 </head>
 <body>
   <h1>Mercado Ejidal de la Mujer de San Pedro Atzompa</h1>
-  <p>Explora una visita virtual por Tu Mercado</p>
+<p>Explora una visita virtual por Tu Mercado</p>
 
-  <div id="app"></div>
+<div id="app"></div>
 
-  <script>
-    const sheetURL = https://opensheet.elk.sh/d/1-M1xPXy8xsDMZEPe_d69MilsJt3ZlLh1vZ9KhBtUepA/edit/1;
+<style>
+  body { font-family: Arial, sans-serif; padding: 10px; }
+  h2 { margin-top: 25px; color: #d35400; }
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  .card img {
+    width: 100%;
+    border-radius: 10px;
+  }
+  .wa {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: #25D366;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+  }
+</style>
 
-    fetch(sheetURL)
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById("app").innerHTML =
-          "<p>La app ya está conectada correctamente ✅</p>";
-      })
-      .catch(() => {
-        document.getElementById("app").innerHTML =
-          "<p>Error de conexión ❌</p>";
+<script>
+const sheetURL = "https://opensheet.elk.sh/1-M1xPXy8xsDMZEPe_d69MilsJt3ZlLh1vZ9KhBtUepA/1";
+
+fetch(sheetURL)
+  .then(res => res.json())
+  .then(data => {
+    const app = document.getElementById("app");
+    const categorias = {};
+
+    data.forEach(p => {
+      if (!categorias[p.Categoría]) {
+        categorias[p.Categoría] = [];
+      }
+      categorias[p.Categoría].push(p);
+    });
+
+    for (const cat in categorias) {
+      const h2 = document.createElement("h2");
+      h2.textContent = cat;
+      app.appendChild(h2);
+
+      categorias[cat].forEach(p => {
+        const div = document.createElement("div");
+        div.className = "card";
+
+        div.innerHTML = `
+          <img src="${p.Imagen}" alt="${p.Nombre}">
+          <h3>${p.Nombre}</h3>
+          <strong>${p.Local}</strong>
+          <p>${p.Descripción}</p>
+          ${p.WhatsApp ? `<a class="wa" href="https://wa.me/52${p.WhatsApp}" target="_blank">Escribir por WhatsApp</a>` : ""}
+        `;
+        app.appendChild(div);
       });
-  </script>
+    }
+  });
+</script>
 </body>
 </html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mercado Ejidal de la Mujer de San Pedro Atzompa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <h1>Mercado Ejidal de la Mujer de San Pedro Atzompa</h1>
+  <p>Explora una visita virtual por Tu Mercado</p>
+
+  <div id="app"></div>
+
+  <script>
+    const sheetURL = "PEGA_AQUÍ_EL_ENLACE_DE_TU_GOOGLE_SHEETS";
+
+    fetch(sheetURL)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("app").innerHTML =
+          "<p>La app ya está conectada correctamente ✅</p>";
+      })
+      .catch(() => {
+        document.getElementById("app").innerHTML =
+          "<p>Error de conexión ❌</p>";
+      });
+  </script>
+</body>
+</html>
